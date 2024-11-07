@@ -1,0 +1,39 @@
+
+package main;
+
+import lib.Employee;
+import lib.EmployeeData;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class EmployeeComparatorApp {
+    public static void main(String[] args) {
+        List<Employee> employees = EmployeeData.getSampleEmployees();
+
+        // Sort employees by salary using a lambda expression
+        employees.sort((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary()));
+        System.out.println("Employees sorted by salary:");
+        employees.forEach(System.out::println);
+
+        // Use Comparator.comparing and thenComparing for multi-level sorting
+        employees.sort(Comparator.comparing(Employee::getSalary).thenComparing(Employee::getAge));
+        System.out.println("\nEmployees sorted by salary, then by age:");
+        employees.forEach(System.out::println);
+
+        // Filter employees with a salary above 55000 using Predicate
+        Predicate<Employee> hasHighSalary = employee -> employee.getSalary() > 55000;
+        List<Employee> highSalaryEmployees = employees.stream()
+                                                      .filter(hasHighSalary)
+                                                      .collect(Collectors.toList());
+        System.out.println("\nEmployees with salary above $55000:");
+        highSalaryEmployees.forEach(System.out::println);
+
+        // Create a Comparator using method reference for sorting by name
+        Comparator<Employee> nameComparator = Comparator.comparing(Employee::getName);
+        employees.sort(nameComparator);
+        System.out.println("\nEmployees sorted by name:");
+        employees.forEach(System.out::println);
+    }

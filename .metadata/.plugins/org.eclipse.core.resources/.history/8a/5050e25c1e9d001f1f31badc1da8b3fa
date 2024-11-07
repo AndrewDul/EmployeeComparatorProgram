@@ -1,0 +1,45 @@
+package main;
+
+import lib.CustomComparator;
+import lib.Employee;
+import lib.EmployeeData;
+import lib.CustomInfo;
+
+import java.util.List;
+
+public class EmployeeComparatorApp {
+    public static void main(String[] args) {
+        List<Employee> employees = EmployeeData.getSampleEmployees();
+
+        // Define a custom comparator using the CustomComparator interface
+        CustomComparator<Employee> salaryComparator = (e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary());
+        
+        // Sort employees using the custom comparator
+        employees.sort((e1, e2) -> salaryComparator.compare(e1, e2));
+        System.out.println("Employees sorted by salary using custom comparator:");
+        employees.forEach(System.out::println);
+
+        // Define another custom comparator for sorting by name
+        CustomComparator<Employee> nameComparator = (e1, e2) -> e1.getName().compareTo(e2.getName());
+        employees.sort((e1, e2) -> nameComparator.compare(e1, e2));
+        System.out.println("\nEmployees sorted by name using custom comparator:");
+        employees.forEach(System.out::println);
+
+        // Implementing and displaying custom info
+        System.out.println("\nCustom Info for Employees:");
+        employees.forEach(employee -> {
+            CustomInfo info = new CustomInfo() {
+                @Override
+                public String getInfo() {
+                    return "Employee: " + employee.getName() + ", Age: " + employee.getAge() + ", Salary: $" + employee.getSalary();
+                }
+
+                @Override
+                public void displayInfo() {
+                    System.out.println(getInfo());
+                }
+            };
+            info.displayInfo();
+        });
+    }
+}

@@ -1,0 +1,6 @@
+INDEX VERSION 1.134+C:\Users\andrz\Desktop\Code\Employee Comparator Program\.metadata\.plugins\org.eclipse.jdt.core
+1672129063.index
+45609520.index
+4257909400.index
+1865797976.index
+2293757472.index
